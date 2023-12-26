@@ -5,4 +5,7 @@ class AppAsset {
   static const String goFlexPM = "assets/audio/post_malone_goflex.mp3";
   static const String raftaRafta = "assets/audio/rafta_rafta.mp3";
   static const String audioCoverJpeg = "assets/image/audio_cover.jpeg";
+  static const String musicalNoteIcon = "assets/icon/musical_note.png";
+  static const String videoIcon = "assets/icon/video_icon.png";
+  static const String playIcon = "assets/icon/play_icon.png";
 }

@@ -23,10 +23,10 @@ class MediaMetaDataWidget extends StatelessWidget {
           title ?? 'Title',
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
         ),
-        Text(
-          artist ?? 'Artist',
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-        ),
+        // Text(
+        //   artist ?? 'Artist',
+        //   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        // ),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.01,
         ),

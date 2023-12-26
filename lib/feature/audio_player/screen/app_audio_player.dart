@@ -11,7 +11,13 @@ import 'package:testplayer/feature/audio_player/widget/controls_widget.dart';
 import 'package:testplayer/feature/audio_player/widget/media_meta_data_widget.dart';
 
 class AppAudioPlayer extends StatefulWidget {
-  const AppAudioPlayer({super.key});
+  final String filePath;
+  final int index;
+  const AppAudioPlayer({
+    super.key,
+    required this.filePath,
+    required this.index,
+  });
 
   @override
   State<AppAudioPlayer> createState() => _AppAudioPlayerState();
@@ -19,8 +25,6 @@ class AppAudioPlayer extends StatefulWidget {
 
 class _AppAudioPlayerState extends State<AppAudioPlayer> {
   AudioPlayer _audioPlayer = AudioPlayer();
-  var duration;
-
   Stream<PositionData> get _positionDataStream =>
       Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
         _audioPlayer.positionStream,
@@ -32,45 +36,6 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
             duration: duration ?? Duration.zero),
       );
 
-  final _playlist = ConcatenatingAudioSource(children: [
-    AudioSource.asset(
-      AppAsset.sampleAudio,
-      tag: const MediaItem(
-        id: '01',
-        album: "Album name",
-        artist: 'Sample Artist',
-        title: "Sample Audio",
-      ),
-    ),
-    AudioSource.asset(
-      AppAsset.congratulationsPM,
-      tag: const MediaItem(
-        id: '02',
-        album: "Album name",
-        artist: 'Post Malone',
-        title: "Congratulations",
-      ),
-    ),
-    AudioSource.asset(
-      AppAsset.goFlexPM,
-      tag: const MediaItem(
-        id: '03',
-        album: "Album name",
-        artist: 'Post Malone',
-        title: "Go Flex",
-      ),
-    ),
-    AudioSource.asset(
-      AppAsset.raftaRafta,
-      tag: const MediaItem(
-        id: '04',
-        album: "Album name",
-        artist: 'Mehndi Hasan',
-        title: "Rafta Rafta",
-      ),
-    ),
-  ]);
-
   @override
   void initState() {
     _init();
@@ -79,7 +44,13 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
 
   Future<void> _init() async {
     await _audioPlayer.setLoopMode(LoopMode.all);
-    await _audioPlayer.setAudioSource(_playlist);
+    await _audioPlayer.setAudioSource(AudioSource.file(
+      widget.filePath,
+      tag: MediaItem(
+        id: widget.index.toString(),
+        title: widget.filePath.split('/').last,
+      ),
+    ));
   }
 
   @override
@@ -140,7 +111,6 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
                     stream: _positionDataStream,
                     builder: (context, snapshot) {
                       final durationState = snapshot.data;
-                      // if (duration != null) {
                       return ProgressBar(
                         barHeight: 8,
                         baseBarColor: Colors.grey[600],

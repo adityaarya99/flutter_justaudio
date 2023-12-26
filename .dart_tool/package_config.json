@@ -38,6 +38,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "bloc",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/bloc-8.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -114,6 +120,12 @@
       "rootUri": "file:///Users/adityaarya/Desktop/flutter/3.16.0/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "flutter_bloc",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/flutter_bloc-8.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_cache_manager",
@@ -258,6 +270,42 @@
       "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1",
       "packageUri": "lib/",
       "languageVersion": "2.19"
+    },
+    {
+      "name": "permission_handler",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/permission_handler-11.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "permission_handler_android",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/permission_handler_android-12.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "permission_handler_apple",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/permission_handler_apple-9.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "permission_handler_html",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/permission_handler_html-0.1.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "permission_handler_platform_interface",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-4.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "permission_handler_windows",
+      "rootUri": "file:///Users/adityaarya/.pub-cache/hosted/pub.dev/permission_handler_windows-0.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "platform",
@@ -464,7 +512,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-12-26T16:24:35.221603Z",
+  "generated": "2023-12-26T16:57:19.886754Z",
   "generator": "pub",
   "generatorVersion": "3.2.0"
 }
