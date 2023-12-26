@@ -1,18 +1,25 @@
 import 'dart:io';
 
-abstract class HomeState{}
+import 'package:testplayer/common/model/custom_file_model.dart';
 
-class InitialHomeState extends HomeState{}
+abstract class HomeState {}
 
-class FetchAudioLoadingState extends HomeState{}
+class InitialHomeState extends HomeState {}
 
-class FetchAudioSuccessState extends HomeState{
-  List<FileSystemEntity> audioFiles;
+class FetchAudioLoadingState extends HomeState {}
+
+class FetchAudioSuccessState extends HomeState {
+  List<String> audioFiles;
   FetchAudioSuccessState({required this.audioFiles});
 }
 
-class FetchVideoSuccessState extends HomeState{
-  List<FileSystemEntity> videoFiles;
+class FetchVideoSuccessState extends HomeState {
+  List<String> videoFiles;
   FetchVideoSuccessState({required this.videoFiles});
 }
 
+class StoragePermissionSuccess extends HomeState {}
+
+class AudioPermissionSuccess extends HomeState {}
+
+class VideoPermissionSuccess extends HomeState {}

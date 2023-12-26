@@ -4,13 +4,15 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:testplayer/feature/home/cubit/home_cubit.dart';
 import 'package:testplayer/feature/home/screen/home_screen.dart';
 
+
 Future<void> main() async {
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
-  runApp(MyApp());
+   WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

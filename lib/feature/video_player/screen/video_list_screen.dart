@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:testplayer/feature/audio_player/screen/app_audio_player.dart';
 import 'package:testplayer/common/widgets/audio_tile_widget.dart';
+import 'package:testplayer/feature/video_player/screen/app_video_player.dart';
 
 class VideoListScreen extends StatelessWidget {
-  final List<FileSystemEntity> videoFiles;
+  final List<String> videoFiles;
   const VideoListScreen({super.key, required this.videoFiles});
 
   @override
@@ -39,13 +40,11 @@ class VideoListScreen extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AppAudioPlayer(
-                                          filePath: videoFiles[index].path,
-                                          index: index,
-                                        )));
+                                    builder: (context) => AppVideoPlayer(
+                                        filePath: videoFiles[index])));
                           },
                           index: index,
-                          fileName: videoFiles[index].path,
+                          fileName: videoFiles[index],
                           isAudio: false,
                         ))
               ],

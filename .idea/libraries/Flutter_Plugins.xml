@@ -4,6 +4,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/just_audio-0.9.36" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audio_session-0.1.18" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_html-0.1.0+2" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/wakelock-0.6.2" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audio_service-0.18.12" />
@@ -17,10 +18,12 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/video_player_android-2.4.10" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audio_service_web-0.1.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler-11.1.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/video_player-2.8.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/video_player_avfoundation-2.5.2" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler_html-0.1.0+2" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler-11.1.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/device_info_plus-8.2.2" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/on_audio_query-2.9.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/on_audio_query_web-1.6.0" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

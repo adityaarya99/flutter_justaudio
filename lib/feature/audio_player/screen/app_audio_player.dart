@@ -24,7 +24,7 @@ class AppAudioPlayer extends StatefulWidget {
 }
 
 class _AppAudioPlayerState extends State<AppAudioPlayer> {
-  AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   Stream<PositionData> get _positionDataStream =>
       Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
         _audioPlayer.positionStream,
@@ -51,6 +51,7 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
         title: widget.filePath.split('/').last,
       ),
     ));
+    _audioPlayer.play();
   }
 
   @override

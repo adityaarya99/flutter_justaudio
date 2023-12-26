@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,7 +7,8 @@ import 'package:testplayer/constant/app_asset.dart';
 import 'package:video_player/video_player.dart';
 
 class AppVideoPlayer extends StatefulWidget {
-  const AppVideoPlayer({super.key});
+  final String filePath;
+  const AppVideoPlayer({super.key, required this.filePath});
 
   @override
   State<AppVideoPlayer> createState() => _AppVideoPlayerState();
@@ -16,8 +19,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
   @override
   void initState() {
     flickManager = FlickManager(
-        videoPlayerController: VideoPlayerController.asset(
-      AppAsset.sampleVideo,
+        videoPlayerController: VideoPlayerController.file(
+      File(widget.filePath),
     ));
     super.initState();
   }
@@ -49,7 +52,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                     border: Border.all(color: Colors.black, width: 4)),
                 child: FlickVideoPlayer(
                   flickManager: flickManager,

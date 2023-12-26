@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:testplayer/feature/audio_player/screen/app_audio_player.dart';
 import 'package:testplayer/common/widgets/audio_tile_widget.dart';
 
 class AudioListScreen extends StatelessWidget {
-  final List<FileSystemEntity> audioFiles;
-  const AudioListScreen({super.key, required this.audioFiles});
+  final List<String> audioFiles;
+  AudioListScreen({super.key, required this.audioFiles});
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +41,12 @@ class AudioListScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AppAudioPlayer(
-                                          filePath: audioFiles[index].path,
+                                          filePath: audioFiles[index],
                                           index: index,
                                         )));
                           },
                           index: index,
-                          fileName: audioFiles[index].path,
+                          fileName: audioFiles[index],
                           isAudio: true,
                         ))
               ],

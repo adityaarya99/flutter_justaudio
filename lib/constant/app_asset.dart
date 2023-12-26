@@ -9,3 +9,10 @@ class AppAsset {
   static const String videoIcon = "assets/icon/video_icon.png";
   static const String playIcon = "assets/icon/play_icon.png";
 }
+
+class AppLottie{
+  static const loadingOne = 'assets/lottie/loading_1.json';
+  static const loadingTwo = 'assets/lottie/loading_2.json';
+  static const videoLottie = 'assets/lottie/video.json';
+  static const audioLottie = 'assets/lottie/audio.json';
+}
