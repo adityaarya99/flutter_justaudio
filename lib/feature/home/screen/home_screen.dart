@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                LottieBuilder.asset(AppLottie.loadingOne),
+                LottieBuilder.asset(AppLottie.loadingOne,repeat: true),
                 const Text(
                   'Please wait while we load Audio & Video....',
                   style: TextStyle(

@@ -50,30 +50,25 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    border: Border.all(color: Colors.black, width: 4)),
-                child: FlickVideoPlayer(
-                  flickManager: flickManager,
-                ),
+              FlickVideoPlayer(
+                flickManager: flickManager,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 4.0),
+              const Padding(
+                padding: EdgeInsets.only(left: 4.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 24,
                     ),
-                    const Text(
+                    Text(
                       'Sample Video',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const Text(
+                    Text(
                       "Experience the serene beauty of nature in this breathtaking footage showcasing the vibrant colors of sunrise over the majestic mountains. Feel the tranquility of the cascading waterfalls and lush greenery as you immerse yourself in the sights and sounds of this natural wonderland. Whether you seek relaxation or inspiration, let this video transport you to a place of serene beauty and awe-inspiring landscapes",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w400),

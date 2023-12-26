@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +50,9 @@ class HomeCubit extends Cubit<HomeState> {
     if (status.isGranted) {
       print('Audio Permission Granted');
       List<SongModel> audios = await _audioQuery.querySongs();
+      if (audios.length > 80) {
+        audios.removeRange(80, audios.length);
+      }
       List<String> filePaths = [];
       for (int i = 0; i < audios.length; i++) {
         filePaths.add(audios[i].data);
@@ -58,6 +63,9 @@ class HomeCubit extends Cubit<HomeState> {
       status = await Permission.audio.request();
       if (status.isGranted) {
         List<SongModel> audios = await _audioQuery.querySongs();
+        if (audios.length > 80) {
+          audios.removeRange(80, audios.length);
+        }
         List<String> filePaths = [];
         for (int i = 0; i < audios.length; i++) {
           filePaths.add(audios[i].data);
@@ -84,7 +92,7 @@ class HomeCubit extends Cubit<HomeState> {
       status = await Permission.videos.request();
       if (status.isGranted) {
         emit(FetchAudioLoadingState());
-        List<FileSystemEntity> files = await _listMp4Files(externalDir!);
+        List<FileSystemEntity> files =await _listMp4Files(externalDir!);
         List<String> filePaths = [];
         for (int i = 0; i < files.length; i++) {
           filePaths.add(files[i].path);
@@ -100,9 +108,10 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> _fetchAudioFiles() async {
     try {
       emit(FetchAudioLoadingState());
-      // List all MP3 files in the directory and its subdirectories
       List<FileSystemEntity> files = await _listMp3Files(externalDir!);
-      // List<FileSystemEntity> audioFiles = files.map((file) => file).toList();
+      if (files.length > 80) {
+        files.removeRange(80, files.length);
+      }
       List<String>? customFileModel = [];
       for (int i = 0; i < files.length; i++) {
         customFileModel.add(files[i].path);
@@ -115,17 +124,12 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> _fetchVideoFiles() async {
     try {
-      // Get external storage directory
-      if (externalDir != null) {
-        // List all MP4 files in the directory and its subdirectories
         List<FileSystemEntity> files = await _listMp4Files(externalDir!);
-        // List<FileSystemEntity> videoFiles = files.map((file) => file).toList();
         List<String>? customFileModel = [];
         for (int i = 0; i < files.length; i++) {
           customFileModel.add(files[i].path);
         }
         emit(FetchVideoSuccessState(videoFiles: customFileModel));
-      }
     } catch (e) {
       print('Error fetching audio files: $e');
     }
@@ -135,15 +139,14 @@ class HomeCubit extends Cubit<HomeState> {
     List<FileSystemEntity> mp3Files = [];
 
     try {
-      // List all files in the directory
       List<FileSystemEntity> files = dir.listSync();
-
+      if (files.length > 80) {
+        files.removeRange(80, files.length);
+      }
       for (FileSystemEntity file in files) {
         if (file is File && file.path.toLowerCase().endsWith('.mp3')) {
-          // Add MP3 file to the list
           mp3Files.add(file);
         } else if (file is Directory) {
-          // Recursively search for MP3 files in subdirectories
           mp3Files.addAll(await _listMp3Files(file));
         }
       }
@@ -158,22 +161,25 @@ class HomeCubit extends Cubit<HomeState> {
     List<FileSystemEntity> mp4Files = [];
 
     try {
-      // List all files in the directory
-      List<FileSystemEntity> files = dir.listSync();
-
-      for (FileSystemEntity file in files) {
-        if (file is File && file.path.toLowerCase().endsWith('.mp4')) {
-          // Add MP4 file to the list
-          mp4Files.add(file);
-        } else if (file is Directory) {
-          // Recursively search for MP4 files in subdirectories
-          mp4Files.addAll(await _listMp4Files(file));
+      if (dir.existsSync()) {
+        List<FileSystemEntity> files = dir.listSync(recursive: false,);
+        if(files.length > 10){
+          files.removeRange(10, files.length);
+        }
+        for (FileSystemEntity file in files) {
+          if (file is File && file.path.toLowerCase().endsWith('.mp4')) {
+            mp4Files.add(file);
+          } else if (file is Directory) {
+            mp4Files.addAll(await _listMp4Files(file));
+          }
         }
       }
     } catch (e) {
-      log('Error listing MP4 files: $e');
+      print('Error listing MP4 files: $e');
     }
 
     return mp4Files;
   }
+
+
 }
