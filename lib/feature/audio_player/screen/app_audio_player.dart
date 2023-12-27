@@ -2,14 +2,17 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:testplayer/constant/app_asset.dart';
+import 'package:testplayer/feature/audio_player/cubit/audio_player_cubit.dart';
+import 'package:testplayer/feature/audio_player/cubit/audio_player_state.dart';
 import 'package:testplayer/feature/audio_player/model/audio_player_state.dart';
 import 'package:testplayer/feature/audio_player/widget/app_bar_audio.dart';
 import 'package:testplayer/feature/audio_player/widget/controls_widget.dart';
 import 'package:testplayer/feature/audio_player/widget/media_meta_data_widget.dart';
 
+AudioPlayer globalAudioPlayer = AudioPlayer();
 class AppAudioPlayer extends StatefulWidget {
   final String filePath;
   final int index;
@@ -43,7 +46,6 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
   }
 
   Future<void> _init() async {
-    await _audioPlayer.setLoopMode(LoopMode.all);
     await _audioPlayer.setAudioSource(AudioSource.file(
       widget.filePath,
       tag: MediaItem(
@@ -56,7 +58,8 @@ class _AppAudioPlayerState extends State<AppAudioPlayer> {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    // context.read<AudioPlayerCubit>().disposeAudioPlayer(_audioPlayer);
+    globalAudioPlayer = _audioPlayer;
     super.dispose();
   }
 

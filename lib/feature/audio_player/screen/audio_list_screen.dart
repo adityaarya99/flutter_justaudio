@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
+import 'package:testplayer/feature/audio_player/cubit/audio_player_cubit.dart';
+import 'package:testplayer/feature/audio_player/cubit/audio_player_state.dart';
 import 'package:testplayer/feature/audio_player/screen/app_audio_player.dart';
 import 'package:testplayer/common/widgets/audio_tile_widget.dart';
 
 class AudioListScreen extends StatelessWidget {
   final List<String> audioFiles;
   AudioListScreen({super.key, required this.audioFiles});
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +38,30 @@ class AudioListScreen extends StatelessWidget {
                 ),
                 ...List.generate(
                     audioFiles.length,
-                    (index) => ListTileWidget(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AppAudioPlayer(
-                                          filePath: audioFiles[index],
-                                          index: index,
-                                        )));
+                    (index) => BlocConsumer<AudioPlayerCubit, AudioPlayerState>(
+                          listener: (context, state) {
+                            if(state is DisposeAudioPlayer){
+                              // state.audioPlayer.dispose();
+                            }
                           },
-                          index: index,
-                          fileName: audioFiles[index],
-                          isAudio: true,
-                        ))
+                          builder: (context, state) {
+                            return ListTileWidget(
+                              onTap: () {
+                                globalAudioPlayer.dispose();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AppAudioPlayer(
+                                              filePath: audioFiles[index],
+                                              index: index,
+                                            )));
+                              },
+                              index: index,
+                              fileName: audioFiles[index],
+                              isAudio: true,
+                            );
+                          },
+                        )),
               ],
             ),
           ),

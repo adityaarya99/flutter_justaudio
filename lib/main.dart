@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:testplayer/feature/audio_player/cubit/audio_player_cubit.dart';
 import 'package:testplayer/feature/home/cubit/home_cubit.dart';
 import 'package:testplayer/feature/home/screen/home_screen.dart';
-
 
 Future<void> main() async {
   await JustAudioBackground.init(
@@ -11,7 +12,7 @@ Future<void> main() async {
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -21,7 +22,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider<HomeCubit>(create: (context) => HomeCubit())],
+      providers: [
+        BlocProvider<HomeCubit>(
+          create: (context) => HomeCubit(),
+        ),
+        BlocProvider<AudioPlayerCubit>(
+          create: (context) => AudioPlayerCubit(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
