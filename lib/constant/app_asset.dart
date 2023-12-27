@@ -1,18 +1,22 @@
 class AppAsset {
-  static const String sampleVideo = "assets/video/sample_video.mp4";
-  static const String sampleAudio = "assets/audio/sample_audio.mp3";
-  static const String congratulationsPM = "assets/audio/post_malone_congratulations.mp3";
-  static const String goFlexPM = "assets/audio/post_malone_goflex.mp3";
-  static const String raftaRafta = "assets/audio/rafta_rafta.mp3";
-  static const String audioCoverJpeg = "assets/image/audio_cover.jpeg";
-  static const String musicalNoteIcon = "assets/icon/musical_note.png";
-  static const String videoIcon = "assets/icon/video_icon.png";
-  static const String playIcon = "assets/icon/play_icon.png";
+  static const String _logoPath = "assets/logo";
+  static const String _iconPath = "assets/icon";
+  static const String _imagePath = "assets/image";
+
+  static const String appLogo = "$_logoPath/app_logo.png";
+  static const String audioCoverJpeg = "$_imagePath/audio_cover.jpeg";
+  static const String musicalNoteIcon = "$_iconPath/musical_note.png";
+  static const String videoIcon = "$_iconPath/video_icon.png";
+  static const String playIcon = "$_iconPath/play_icon.png";
 }
 
-class AppLottie{
-  static const loadingOne = 'assets/lottie/loading_1.json';
-  static const loadingTwo = 'assets/lottie/loading_2.json';
-  static const videoLottie = 'assets/lottie/video.json';
-  static const audioLottie = 'assets/lottie/audio.json';
+class AppLottie {
+  static const String _lottiePath = "assets/lottie";
+
+  static const loadingOne = '$_lottiePath/loading_1.json';
+  static const loadingTwo = '$_lottiePath/loading_2.json';
+  static const videoLottie = '$_lottiePath/video.json';
+  static const audioLottie = '$_lottiePath/audio.json';
+  static const halloweenLottie = '$_lottiePath/halloween.json';
+  static const politeChickyLottie = '$_lottiePath/polite_chicky.json';
 }
