@@ -15,9 +15,9 @@ class HomeCubit extends Cubit<HomeState> {
   Directory? externalDir = Directory('/storage/emulated/0');
   int androidVersion = 1;
   final OnAudioQuery _audioQuery = OnAudioQuery();
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   Future<void> checkAndroidVersion() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     androidVersion = int.tryParse(androidInfo.version.release ?? '1')!;
     if (androidVersion <= 12) {
@@ -29,7 +29,6 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> _checkPermissionAndFetchFiles() async {
     var status = await Permission.storage.status;
-
     if (status.isGranted) {
       _fetchAudioFiles();
       _fetchVideoFiles();

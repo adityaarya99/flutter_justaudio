@@ -8,6 +8,8 @@ class InitialHomeState extends HomeState {}
 
 class FetchAudioLoadingState extends HomeState {}
 
+class FetchVideoLoadingState extends HomeState {}
+
 class FetchAudioSuccessState extends HomeState {
   List<String> audioFiles;
   FetchAudioSuccessState({required this.audioFiles});
