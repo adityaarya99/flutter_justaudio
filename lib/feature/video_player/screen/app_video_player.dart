@@ -12,13 +12,15 @@ class AppVideoPlayer extends StatefulWidget {
   State<AppVideoPlayer> createState() => _AppVideoPlayerState();
 }
 
-class _AppVideoPlayerState extends State<AppVideoPlayer> {
+class _AppVideoPlayerState extends State<AppVideoPlayer>
+    with WidgetsBindingObserver {
   late BetterPlayerController _betterPlayerController;
 
   late bool isPictureInPictureSupported;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     _init();
     super.initState();
   }
@@ -35,6 +37,23 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
           BetterPlayerDataSourceType.file,
           widget.filePath,
         ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.inactive) {
+      WidgetsBinding.instance.addPostFrameCallback((timings) {
+        _betterPlayerController.enablePictureInPicture(_betterPlayerKey);
+      });
+    }
+    print("App Lifecycle State : $state");
   }
 
   @override
@@ -73,13 +92,16 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('Enter Background'),
-                      SizedBox(width: 12,),
+                      SizedBox(
+                        width: 12,
+                      ),
                       Icon(Icons.picture_in_picture),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24,),
-
+                const SizedBox(
+                  height: 24,
+                ),
                 ElevatedButton(
                   onPressed: () {
                     _betterPlayerController.disablePictureInPicture();
@@ -88,7 +110,9 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('Exit Background'),
-                      SizedBox(width: 12,),
+                      SizedBox(
+                        width: 12,
+                      ),
                       Icon(Icons.disabled_by_default_outlined),
                     ],
                   ),
