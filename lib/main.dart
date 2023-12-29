@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:testplayer/feature/audio_player/cubit/audio_player_cubit.dart';
 import 'package:testplayer/feature/home/cubit/home_cubit.dart';
 import 'package:testplayer/feature/home/screen/home_screen.dart';
+import 'package:testplayer/feature/video_player/cubit/like_dislike_cubit.dart';
+import 'package:testplayer/feature/video_player/cubit/like_dislike_state.dart';
 
 Future<void> main() async {
   await JustAudioBackground.init(
@@ -12,6 +15,11 @@ Future<void> main() async {
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -28,6 +36,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<AudioPlayerCubit>(
           create: (context) => AudioPlayerCubit(),
+        ),
+        BlocProvider<LikeCubit>(
+          create: (context) => LikeCubit(),
         ),
       ],
       child: MaterialApp(

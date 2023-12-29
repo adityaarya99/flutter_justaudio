@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:testplayer/feature/audio_player/screen/app_audio_player.dart';
 import 'package:testplayer/common/widgets/audio_tile_widget.dart';
 import 'package:testplayer/feature/video_player/screen/app_video_player.dart';
+import 'package:testplayer/feature/video_player/widget/app_bar_video.dart';
 
 class VideoListScreen extends StatelessWidget {
   final List<String> videoFiles;
@@ -26,8 +27,10 @@ class VideoListScreen extends StatelessWidget {
         behavior: const ScrollBehavior().copyWith(overscroll: false),
         child: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: Column(
               children: [
                 const SizedBox(

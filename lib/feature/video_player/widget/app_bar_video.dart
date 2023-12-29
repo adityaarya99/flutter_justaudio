@@ -17,7 +17,7 @@ class AppBarVideo extends StatelessWidget {
               icon: const Icon(
                 Icons.arrow_back_ios_new,
                 size: 24,
-                color: Colors.black,
+                color: Colors.white,
               )),
         ),
         SizedBox(
@@ -28,7 +28,7 @@ class AppBarVideo extends StatelessWidget {
               Text(
                 'Video Player',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                 ),

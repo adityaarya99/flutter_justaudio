@@ -19,4 +19,6 @@ class AppLottie {
   static const audioLottie = '$_lottiePath/audio.json';
   static const halloweenLottie = '$_lottiePath/halloween.json';
   static const politeChickyLottie = '$_lottiePath/polite_chicky.json';
+  static const confettiLottie = '$_lottiePath/confetti.json';
+  static const carCrashLottie = '$_lottiePath/car_crash.json';
 }

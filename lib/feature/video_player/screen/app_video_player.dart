@@ -1,6 +1,19 @@
+import 'dart:io';
+
 import 'package:better_player/better_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:testplayer/constant/app_asset.dart';
+import 'package:testplayer/constant/app_colors.dart';
+import 'package:testplayer/feature/video_player/cubit/like_dislike_cubit.dart';
+import 'package:testplayer/feature/video_player/cubit/like_dislike_state.dart';
 import 'package:testplayer/feature/video_player/widget/app_bar_video.dart';
+import 'package:testplayer/feature/video_player/widget/video_like_share_widget.dart';
+import 'package:testplayer/feature/video_player/widget/video_name_description_widget.dart';
+import 'package:testplayer/feature/video_player/widget/video_options_tile.dart';
 
 GlobalKey _betterPlayerKey = GlobalKey();
 
@@ -18,8 +31,16 @@ class _AppVideoPlayerState extends State<AppVideoPlayer>
 
   late bool isPictureInPictureSupported;
 
+  String filename = "";
+
+  bool isVideoLiked = false;
+
+  bool isVideoDisliked = false;
+
   @override
   void initState() {
+    filename = widget.filePath.split('/').last;
+    filename = filename.split('.').first;
     WidgetsBinding.instance.addObserver(this);
     _init();
     super.initState();
@@ -29,7 +50,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer>
     ///INITIALISE BETTER PLAYER
     _betterPlayerController = BetterPlayerController(
         const BetterPlayerConfiguration(
-          // autoDispose: true,
+          autoDetectFullscreenAspectRatio: true,
+          autoDetectFullscreenDeviceOrientation: true,
           autoPlay: true,
           looping: true,
         ),
@@ -47,78 +69,145 @@ class _AppVideoPlayerState extends State<AppVideoPlayer>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.inactive) {
       WidgetsBinding.instance.addPostFrameCallback((timings) {
         _betterPlayerController.enablePictureInPicture(_betterPlayerKey);
       });
     }
+    // else if(state == AppLifecycleState.resumed){
+    //   WidgetsBinding.instance.addPostFrameCallback((timings) {
+    //     _betterPlayerController.disablePictureInPicture();
+    //   });
+    // }
     print("App Lifecycle State : $state");
+    super.didChangeAppLifecycleState(state);
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Stack(
           children: [
-            const SizedBox(
-              height: 24,
-            ),
-            const AppBarVideo(),
-            const SizedBox(
-              height: 24,
-            ),
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: BetterPlayer(
-                key: _betterPlayerKey,
-                controller: _betterPlayerController,
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Column(
+            Stack(
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _betterPlayerController
-                        .enablePictureInPicture(_betterPlayerKey);
-                  },
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Enter Background'),
-                      SizedBox(
-                        width: 12,
+                Column(
+                  children: [
+                    // const AppBarVideo(),
+                    AspectRatio(
+                      aspectRatio:
+                          (_betterPlayerController.getAspectRatio() ?? 16 / 9),
+                      child: BetterPlayer(
+                        key: _betterPlayerKey,
+                        controller: _betterPlayerController,
                       ),
-                      Icon(Icons.picture_in_picture),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    _betterPlayerController.disablePictureInPicture();
-                  },
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Exit Background'),
-                      SizedBox(
-                        width: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ///VIDEO NAME
+                          VideoNameDescriptionWidget(fileName: filename),
+                          const SizedBox(
+                            height: 14,
+                          ),
+
+                          ///Video Description Widget
+                          VideoOptionsTile(onTapMoreVert: () {
+                            Fluttertoast.showToast(msg: 'Coming Soon...');
+                          }),
+                          const SizedBox(
+                            height: 14,
+                          ),
+
+                          ///VIDEO LIKE SHARE WIDGET
+                          BlocConsumer<LikeCubit, LikeState>(
+                            listener: (context, state) {
+                              if (state is LikeSuccessState) {
+                                if (isVideoLiked) {
+                                  isVideoLiked = false;
+                                } else {
+                                  isVideoLiked = true;
+                                }
+                              }
+                              if (state is DislikeSuccessState) {
+                                if (isVideoDisliked) {
+                                  isVideoDisliked = false;
+                                } else {
+                                  isVideoDisliked = true;
+                                }
+                              }
+                            },
+                            builder: (context, state) {
+                              return VideoLikeShareWidget(
+                                liked: isVideoLiked,
+                                diLiked: isVideoDisliked,
+                                likes: (isVideoLiked) ? "13" : "12",
+                                onTaplike: () {
+                                  ///LIKE VIDEO
+                                  context.read<LikeCubit>().likeVideo();
+                                },
+                                onTapDislike: () {
+                                  ///DISLIKE VIDEO
+                                  context.read<LikeCubit>().disLikeVideo();
+                                },
+                                onTapShare: () {
+                                  ///SHARE FILE
+                                  Fluttertoast.showToast(msg: 'Coming Soon...');
+                                  //   Share.shareXFiles([XFile(widget.filePath)]);
+                                },
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                      Icon(Icons.disabled_by_default_outlined),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
+                BlocConsumer<LikeCubit, LikeState>(
+                  listener: (context, state) async {
+                    if (state is LikeSuccessState && isVideoLiked) {
+                      await Future.delayed(const Duration(milliseconds: 2000));
+                      context.read<LikeCubit>().resetState();
+                    } else if (state is DislikeSuccessState &&
+                        isVideoDisliked) {
+                      await Future.delayed(const Duration(milliseconds: 1400));
+                      context.read<LikeCubit>().resetState();
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is LikeSuccessState && isVideoLiked) {
+                      return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: LottieBuilder.asset(
+                            AppLottie.confettiLottie,
+                          ));
+                    } else if (state is DislikeSuccessState &&
+                        isVideoDisliked) {
+                      return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: LottieBuilder.asset(
+                            AppLottie.carCrashLottie,
+                          ));
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
                 ),
               ],
             ),
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AppColors.colorWhiteFb,
+                )),
           ],
         ),
       ),
