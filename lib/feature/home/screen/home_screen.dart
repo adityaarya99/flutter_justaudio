@@ -26,7 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    context.read<HomeCubit>().checkAndroidVersion();
+    if(Platform.isAndroid){
+      context.read<HomeCubit>().checkAndroidVersion();
+    }
     super.initState();
   }
 

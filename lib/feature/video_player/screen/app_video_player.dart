@@ -49,16 +49,25 @@ class _AppVideoPlayerState extends State<AppVideoPlayer>
   void _init() {
     ///INITIALISE BETTER PLAYER
     _betterPlayerController = BetterPlayerController(
-        const BetterPlayerConfiguration(
-          autoDetectFullscreenAspectRatio: true,
-          autoDetectFullscreenDeviceOrientation: true,
-          autoPlay: true,
-          looping: true,
+       BetterPlayerConfiguration(
+        autoDetectFullscreenAspectRatio: true,
+        autoDetectFullscreenDeviceOrientation: true,
+        autoPlay: true,
+        looping: true,
+      ),
+      betterPlayerDataSource: BetterPlayerDataSource(
+        BetterPlayerDataSourceType.file,
+        widget.filePath,
+        notificationConfiguration: BetterPlayerNotificationConfiguration(
+          showNotification: true,
+          title: filename,
+          author: "Some author",
+          imageUrl:
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/1200px-African_Bush_Elephant.jpg",
+          activityName: "MainActivity",
         ),
-        betterPlayerDataSource: BetterPlayerDataSource(
-          BetterPlayerDataSourceType.file,
-          widget.filePath,
-        ));
+      ),
+    );
   }
 
   @override
@@ -74,14 +83,8 @@ class _AppVideoPlayerState extends State<AppVideoPlayer>
         _betterPlayerController.enablePictureInPicture(_betterPlayerKey);
       });
     }
-    // else if(state == AppLifecycleState.resumed){
-    //   WidgetsBinding.instance.addPostFrameCallback((timings) {
-    //     _betterPlayerController.disablePictureInPicture();
-    //   });
-    // }
     print("App Lifecycle State : $state");
     super.didChangeAppLifecycleState(state);
-
   }
 
   @override
@@ -111,7 +114,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ///VIDEO NAME
-                          VideoNameDescriptionWidget(fileName: filename),
+                          VideoNameDescriptionWidget(fileName: "Elephant dream"),
                           const SizedBox(
                             height: 14,
                           ),
